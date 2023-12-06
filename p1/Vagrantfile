@@ -76,23 +76,24 @@ Vagrant.configure("2") do |config|
     vb.cpus = 1 # Only one core
     vb.memory = 512 #mb is ample 
   end
-  
+
   config.vm.define "sclolusS" do |node|
     node.vm.network "private_network", ip: "192.168.56.110", bridge: "wlp36s0"
     node.vm.hostname = "sclolusS"
     node.ssh.password = "vagrant"
 
-    node.vm.provision "shell", inline: "curl -sfL https://get.k3s.io | sh - ;"
-    # node.vm.provision "shell", path: 'ssh_setup.sh'
+    node.vm.provision "shell", path: './scripts/k3s_setup.sh'
+    node.vm.provision "shell", path: './scripts/ssh_setup.sh'
   end
 
   config.vm.define "sclolusSW" do |node|
     node.vm.network "private_network", ip: "192.168.56.111", bridge: "wlp36s0"
     node.vm.hostname = "sclolusSW"
-
     node.ssh.password = "vagrant"
 
-     node.vm.provision "shell", inline: "curl -sfL https://get.k3s.io | sh - ;"
+    node.vm.provision "shell", path: './scripts/k3s_setup.sh'
+    node.vm.provision "shell", path: './scripts/ssh_setup.sh'
+
   end
 end
 
